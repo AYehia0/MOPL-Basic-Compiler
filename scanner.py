@@ -31,6 +31,18 @@ class Token:
             return f"({self.token_type}, {self.value})"
         return self.token_type
 
+# Errors 
+class Error:
+    def __init__(self, name, details):
+        self.error_name = name
+        self.details = details
+    def __str__(self):
+        return f"Error ({self.error_name}) : {self.details} "
+
+class IllegalChar(Error):
+    def __init__(self, details):
+        super().__init__("Illegal Character", details)
+
 # Creating the Scanner
 class Scanner:
     """
@@ -62,14 +74,16 @@ class Scanner:
                     tokens.append(Token(TOKEN_TYPES[self.current_char], self.current_char))
                     self.move()
                 # checking for numbers
-                if self.current_char is not None:
+                elif self.current_char is not None:
                     if self.current_char in DIGITS + '.':
                         tokens.append(self.get_full_number())
-
-            else: 
+                    # Error
+                    else:
+                        return [], str(IllegalChar(f"{self.current_char} at position {self.current_pos}"))
+            else:
                 self.move()
 
-        return tokens
+        return tokens, None
 
     def get_full_number(self):
         """Extracting the full number from 1234 + 23"""
@@ -92,8 +106,7 @@ class Scanner:
 
             else:
                 number += self.current_char
-
-            # moving
+            # It's important to move to the next location
             self.move()
 
         # int
