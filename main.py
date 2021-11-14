@@ -1,6 +1,6 @@
 from scanner import Scanner
 
-test_str = "(.5 / 30 )+ 3"
+test_str = "a - 3"
 
 sc = Scanner(test_str)
 
