@@ -1,23 +1,4 @@
-"""This file holds the whole language"""
-
-# Token types 
-
-TOKEN_TYPES = {
-    "*":"MUL",
-    "/":"DIV",
-    "+":"ADD",
-    "-":"SUB",
-    "(":"L_P",
-    ")":"R_P",
-}
-
-# Data types 
-DATA_TYPES = {
-    "T_INT" : "INT",
-    "T_FLOAT" : "FLOAT",
-}
-
-DIGITS = "1234567890"
+from lang_words import *
 
 # Creating the Tokenizer
 class Token:
@@ -68,7 +49,6 @@ class Scanner:
 
         while self.current_char is not None:
             # ignoring spaces and tabs , ,,,etc
-
             if not self.current_char in " \t" :
                 if self.current_char in "+*/-()":
                     tokens.append(Token(TOKEN_TYPES[self.current_char], self.current_char))
@@ -96,7 +76,6 @@ class Scanner:
 
         while self.current_char is not None and self.current_char in DIGITS + ".":
             if self.current_char == '.':
-
                 # float can only have one dot
                 if dots == 1:
                     break
@@ -106,6 +85,7 @@ class Scanner:
 
             else:
                 number += self.current_char
+
             # It's important to move to the next location
             self.move()
 
