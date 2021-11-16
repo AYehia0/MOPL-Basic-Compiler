@@ -1,9 +1,18 @@
 from scanner import Scanner
+from parser import Parser
 
-test_str = "a - 3"
+test_str = "3 + 4 + 3 - 2 / 2"
+
+print(test_str)
 
 sc = Scanner(test_str)
 
-print(test_str)
-print(sc.generate_tokens())
+tokens, err = sc.generate_tokens()
+
+print(tokens)
+
+pr = Parser(tokens)
+ast = pr.parse()
+
+print(ast)
 
